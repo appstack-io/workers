@@ -2,6 +2,7 @@ syntax = "proto3";
 import "google/protobuf/empty.proto";
 
 message PublishJobInput {
+  string sender = 1000;
 }
 
 message PublishJobResult {

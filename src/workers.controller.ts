@@ -1,9 +1,10 @@
 import { Controller, UseInterceptors } from '@nestjs/common';
 import { GrpcMethod, Payload } from '@nestjs/microservices';
 import {
+  PublishJobInput,
   PublishJobResult,
   WorkersHealthCheckResult,
-} from '../../proto/interfaces';
+} from './workers.interfaces';
 import { MqService } from '@appstack-io/mq';
 import { RpcAuthAssertInternalInterceptor } from '@appstack-io/authnz';
 
