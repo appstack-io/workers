@@ -1,1 +1,1 @@
-# workers
+# @appstack-io/workers
