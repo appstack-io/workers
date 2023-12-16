@@ -4,7 +4,7 @@ import {
   PublishJobInput,
   PublishJobResult,
   WorkersHealthCheckResult,
-} from './workers.interfaces';
+} from './combined.interfaces';
 import { MqService } from '@appstack-io/mq';
 import { RpcAuthAssertInternalInterceptor } from '@appstack-io/authnz';
 
