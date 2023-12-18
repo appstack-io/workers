@@ -1,8 +1,9 @@
 /* eslint-disable */
+import type { CallContext, CallOptions } from "nice-grpc-common";
 import * as _m0 from "protobufjs/minimal";
-import { Empty } from "./google/protobuf/empty";
+import { Empty } from "./google//protobuf/empty";
 
-export const protobufPackage = "";
+export const protobufPackage = "main";
 
 export interface PublishJobInput {
   sender: string;
@@ -63,10 +64,10 @@ export const PublishJobInput = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<PublishJobInput>, I>>(base?: I): PublishJobInput {
-    return PublishJobInput.fromPartial(base ?? ({} as any));
+  create(base?: DeepPartial<PublishJobInput>): PublishJobInput {
+    return PublishJobInput.fromPartial(base ?? {});
   },
-  fromPartial<I extends Exact<DeepPartial<PublishJobInput>, I>>(object: I): PublishJobInput {
+  fromPartial(object: DeepPartial<PublishJobInput>): PublishJobInput {
     const message = createBasePublishJobInput();
     message.sender = object.sender ?? "";
     return message;
@@ -120,10 +121,10 @@ export const PublishJobResult = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<PublishJobResult>, I>>(base?: I): PublishJobResult {
-    return PublishJobResult.fromPartial(base ?? ({} as any));
+  create(base?: DeepPartial<PublishJobResult>): PublishJobResult {
+    return PublishJobResult.fromPartial(base ?? {});
   },
-  fromPartial<I extends Exact<DeepPartial<PublishJobResult>, I>>(object: I): PublishJobResult {
+  fromPartial(object: DeepPartial<PublishJobResult>): PublishJobResult {
     const message = createBasePublishJobResult();
     message.jobId = object.jobId ?? "";
     return message;
@@ -177,19 +178,48 @@ export const WorkersHealthCheckResult = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<WorkersHealthCheckResult>, I>>(base?: I): WorkersHealthCheckResult {
-    return WorkersHealthCheckResult.fromPartial(base ?? ({} as any));
+  create(base?: DeepPartial<WorkersHealthCheckResult>): WorkersHealthCheckResult {
+    return WorkersHealthCheckResult.fromPartial(base ?? {});
   },
-  fromPartial<I extends Exact<DeepPartial<WorkersHealthCheckResult>, I>>(object: I): WorkersHealthCheckResult {
+  fromPartial(object: DeepPartial<WorkersHealthCheckResult>): WorkersHealthCheckResult {
     const message = createBaseWorkersHealthCheckResult();
     message.ok = object.ok ?? false;
     return message;
   },
 };
 
-export interface WorkersService {
-  PublishJob(request: PublishJobInput): Promise<PublishJobResult>;
-  HealthCheck(request: Empty): Promise<WorkersHealthCheckResult>;
+export type WorkersServiceDefinition = typeof WorkersServiceDefinition;
+export const WorkersServiceDefinition = {
+  name: "WorkersService",
+  fullName: "main.WorkersService",
+  methods: {
+    publishJob: {
+      name: "PublishJob",
+      requestType: PublishJobInput,
+      requestStream: false,
+      responseType: PublishJobResult,
+      responseStream: false,
+      options: {},
+    },
+    healthCheck: {
+      name: "HealthCheck",
+      requestType: Empty,
+      requestStream: false,
+      responseType: WorkersHealthCheckResult,
+      responseStream: false,
+      options: {},
+    },
+  },
+} as const;
+
+export interface WorkersServiceImplementation<CallContextExt = {}> {
+  publishJob(request: PublishJobInput, context: CallContext & CallContextExt): Promise<DeepPartial<PublishJobResult>>;
+  healthCheck(request: Empty, context: CallContext & CallContextExt): Promise<DeepPartial<WorkersHealthCheckResult>>;
+}
+
+export interface WorkersServiceClient<CallOptionsExt = {}> {
+  publishJob(request: DeepPartial<PublishJobInput>, options?: CallOptions & CallOptionsExt): Promise<PublishJobResult>;
+  healthCheck(request: DeepPartial<Empty>, options?: CallOptions & CallOptionsExt): Promise<WorkersHealthCheckResult>;
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
@@ -199,10 +229,6 @@ export type DeepPartial<T> = T extends Builtin ? T
   : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-
-type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
